@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Space, Typography } from 'antd';
+import { Link } from 'react-router-dom';
 
 const StyledList = styled.ul`
     padding: 0;
@@ -14,20 +15,29 @@ const StyledListItem = styled.li`
     margin: 1.75rem 0;
 `;
 
+interface ICompanyItem {
+    companyDescription: string;
+    companyName: string;
+    createdAt: string;
+    _id: string;
+}
+
 interface ICompanyListProps {
-    companyList: any;
+    companyList: ICompanyItem[];
 }
 
 const CompanyList = ({ companyList }: ICompanyListProps) => {
     return (
         <StyledList>
-            {companyList.map((item: any) => {
+            {companyList.map((item) => {
                 return (
-                    <StyledListItem>
-                        <Space direction='horizontal' size={20} wrap>
-                            <Typography.Title level={4}>{item.email}</Typography.Title>
-                        </Space>
-                    </StyledListItem>
+                    <Link to={`/profil/${item._id}`} key={item._id}>
+                        <StyledListItem>
+                            <Typography.Title level={4}>{item.companyName}</Typography.Title>
+                            <Typography.Paragraph>{item.companyDescription}</Typography.Paragraph>
+                            <Typography.Text type='secondary'>{item.createdAt}</Typography.Text>
+                        </StyledListItem>
+                    </Link>
                 );
             })}
         </StyledList>

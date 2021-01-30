@@ -1,7 +1,7 @@
 import { Button, Col, message, PageHeader, Row, Spin, Typography } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const SingleOffer = () => {
     const params: any = useParams();
@@ -42,6 +42,12 @@ const SingleOffer = () => {
                         <Typography.Title level={3}>{offer.title}</Typography.Title>
                         <Typography.Title level={5}>Opis stanowiska</Typography.Title>
 
+                        {console.log('offer', offer.owner?._id)}
+                        {offer.owner?.hasCompanyProfile && (
+                            <Link to={`/profil/${offer.owner._id}`}>
+                                <Button>Profil pracodawcy</Button>
+                            </Link>
+                        )}
                         <Typography.Paragraph>{offer.description}</Typography.Paragraph>
                         <Button type='primary' onClick={handleApply}>
                             Aplikuj

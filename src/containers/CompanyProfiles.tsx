@@ -12,10 +12,12 @@ const CompanyProfiles = () => {
         try {
             setLoading(true);
 
-            const { userList, totalCount } = await axios
-                .get(`http://localhost:5000/api/user?page=${pageNumber}&limit=${pageSize}`)
+            const { companyProfiles, totalCount } = await axios
+                .get(`http://localhost:5000/api/companyProfile?page=${pageNumber}&limit=${pageSize}`)
                 .then((response) => response.data);
-            setCompanyProfileArr(userList);
+
+            console.log('companyProfiles', companyProfiles);
+            setCompanyProfileArr(companyProfiles);
 
             setTotalCount(totalCount);
 
@@ -37,7 +39,7 @@ const CompanyProfiles = () => {
     return (
         <Row style={{ marginTop: '2rem' }}>
             <Col md={{ span: 16, offset: 4 }}>
-                <Typography.Title level={1}>Lista Ofert</Typography.Title>
+                <Typography.Title level={1}>Profile pracodawców</Typography.Title>
                 {loading ? <Spin size='large' /> : <CompanyList companyList={companyProfileArr} />}
                 <Pagination defaultCurrent={1} pageSize={5} total={totalCount} onChange={handlePaginationChange} />
             </Col>

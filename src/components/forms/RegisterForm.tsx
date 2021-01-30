@@ -19,6 +19,7 @@ const RegisterForm = () => {
                 .then((response) => response.data);
             setLoading(false);
             message.success('Udało się stworzyć użytkownika');
+
             history.push('/login');
         } catch (err) {
             message.error('Coś się nie udało');
