@@ -1,12 +1,17 @@
 import { Button, Col, Empty, message, Row, Space, Spin, Typography } from 'antd';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import DashboardOfferList from '../components/lists/DashboardOfferList';
 import { UserContext } from '../context/UserContext';
 
 const Dashboard = () => {
     const { user } = useContext(UserContext);
+    const history = useHistory();
+    if (!user?.companyName) {
+        history.replace('/dashboard/completeyourprofile');
+    }
+
     const [loading, setLoading] = useState(false);
     const [offerList, setOfferList] = useState([]);
 

@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Space, Typography } from 'antd';
+import { Space, Typography, List, Avatar, Tag } from 'antd';
 import { Link } from 'react-router-dom';
+import { HomeOutlined } from '@ant-design/icons';
+import { ICompanyItem } from '../../containers/CompanyProfiles';
 
 const StyledList = styled.ul`
     padding: 0;
@@ -15,32 +17,60 @@ const StyledListItem = styled.li`
     margin: 1.75rem 0;
 `;
 
-interface ICompanyItem {
-    companyDescription: string;
-    companyName: string;
-    createdAt: string;
-    _id: string;
-}
-
 interface ICompanyListProps {
     companyList: ICompanyItem[];
 }
 
 const CompanyList = ({ companyList }: ICompanyListProps) => {
     return (
-        <StyledList>
-            {companyList.map((item) => {
-                return (
-                    <Link to={`/profil/${item._id}`} key={item._id}>
-                        <StyledListItem>
-                            <Typography.Title level={4}>{item.companyName}</Typography.Title>
-                            <Typography.Paragraph>{item.companyDescription}</Typography.Paragraph>
-                            <Typography.Text type='secondary'>{item.createdAt}</Typography.Text>
-                        </StyledListItem>
-                    </Link>
-                );
-            })}
-        </StyledList>
+        <List
+            itemLayout='vertical'
+            size='large'
+            dataSource={companyList}
+            renderItem={(item) => (
+                <Link to={`/oferta/${item._id}`} key={item._id}>
+                    <StyledListItem style={{ margin: '25px 0' }}>
+                        <List.Item.Meta
+                            avatar={
+                                <Avatar
+                                    style={{ width: '70px', height: '70px' }}
+                                    src={`https://logo.clearbit.com/clawrock.com`}
+                                />
+                            }
+                            title={
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Space size={6} direction='horizontal'>
+                                        <Typography.Title level={2}>Netguru</Typography.Title>
+                                        <div>Software house</div>
+                                    </Space>
+                                    <div>Warszawa</div>
+                                </div>
+                            }
+                            description={
+                                <>
+                                    Building systems of a tomorrow
+                                    <br /> <Tag>10 ofert pracy</Tag>
+                                </>
+                            }
+                        />
+                    </StyledListItem>
+                </Link>
+            )}
+        />
+
+        // <StyledList>
+        //     {companyList.map((item) => {
+        //         return (
+        //             <Link to={`/profil/${item._id}`} key={item._id}>
+        //                 <StyledListItem>
+        //                     <Typography.Title level={4}>{item.companyName}</Typography.Title>
+        //                     <Typography.Paragraph>{item.companyDescription}</Typography.Paragraph>
+        //                     <Typography.Text type='secondary'>{item.createdAt}</Typography.Text>
+        //                 </StyledListItem>
+        //             </Link>
+        //         );
+        //     })}
+        // </StyledList>
     );
 };
 

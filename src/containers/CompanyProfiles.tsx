@@ -3,9 +3,19 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import CompanyList from '../components/lists/CompanyList';
 
+export interface ICompanyItem {
+    companyName: string;
+    shortDescription: string;
+    location: string;
+    companyUrl: string;
+    typeOfCompany: string;
+    numberOfOffers: number;
+    _id: string;
+}
+
 const CompanyProfiles = () => {
     const [loading, setLoading] = useState(true);
-    const [companyProfileArr, setCompanyProfileArr] = useState([]);
+    const [companyProfileArr, setCompanyProfileArr] = useState<ICompanyItem[]>([]);
     const [totalCount, setTotalCount]: any = useState(0);
 
     const getCompanyProfiles = async (pageNumber: number = 1, pageSize: number = 5) => {

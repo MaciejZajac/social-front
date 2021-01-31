@@ -11,6 +11,7 @@ interface IUserContext {
         email: string;
         token: string;
         userId: string;
+        companyName: string;
     };
     login: ({ email, password, roleName }: { email: string; password: string; roleName: string }) => void;
     logout: () => void;
@@ -27,7 +28,7 @@ const UserContext = React.createContext<IUserContext>(initialState);
 const UserProvider: FunctionComponent = ({ children }) => {
     const history = useHistory();
     const [loadingUser, setLoadingUser] = useState(true);
-    const [user, setUser] = useState({ email: '', token: '', userId: '' });
+    const [user, setUser] = useState({ email: '', token: '', userId: '', companyName: '' });
     console.log('process.env', process.env);
     useEffect(() => {
         const token = Cookies.get('token') as string;
@@ -35,7 +36,8 @@ const UserProvider: FunctionComponent = ({ children }) => {
             try {
                 const userData: any = jwt.verify(token, process.env.REACT_APP_JWT_KEY!);
                 console.log('userData', userData);
-                setUser({ email: userData.email, token, userId: userData.userId });
+                const { email, userId, companyName } = userData;
+                setUser({ email, token, userId, companyName });
                 setLoadingUser(false);
             } catch (err) {
                 console.error(err);
@@ -55,7 +57,8 @@ const UserProvider: FunctionComponent = ({ children }) => {
                 .then((response) => response.data);
             const { token } = result;
             const userData: any = jwt.verify(token, process.env.REACT_APP_JWT_KEY!);
-            setUser({ email: userData.email, token, userId: userData.userId });
+            const { email: userEmail, userId, companyName } = userData;
+            setUser({ email: userEmail, token, userId, companyName });
             Cookies.set('token', token);
             console.log('1');
             history.push('/dashboard');
@@ -68,7 +71,7 @@ const UserProvider: FunctionComponent = ({ children }) => {
     const logout = () => {
         Cookies.remove('token');
         history.push('/');
-        setUser({ email: '', token: '', userId: '' });
+        setUser({ email: '', token: '', userId: '', companyName: '' });
     };
 
     return <UserContext.Provider value={{ user, loadingUser, login, logout }}>{children}</UserContext.Provider>;
