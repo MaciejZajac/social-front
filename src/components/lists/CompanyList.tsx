@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Space, Typography, List, Avatar, Tag } from 'antd';
 import { Link } from 'react-router-dom';
-import { HomeOutlined } from '@ant-design/icons';
-import { ICompanyItem } from '../../containers/CompanyProfiles';
+import { IUserDetails } from '../../containers/Dashboard';
 
 const StyledList = styled.ul`
     padding: 0;
@@ -18,7 +17,7 @@ const StyledListItem = styled.li`
 `;
 
 interface ICompanyListProps {
-    companyList: ICompanyItem[];
+    companyList: IUserDetails[];
 }
 
 const CompanyList = ({ companyList }: ICompanyListProps) => {
@@ -34,7 +33,7 @@ const CompanyList = ({ companyList }: ICompanyListProps) => {
                             avatar={
                                 <Avatar
                                     style={{ width: '70px', height: '70px' }}
-                                    src={`https://logo.clearbit.com/clawrock.com`}
+                                    src={`https://logo.clearbit.com/${item.companyUrl}`}
                                 />
                             }
                             title={
@@ -57,20 +56,6 @@ const CompanyList = ({ companyList }: ICompanyListProps) => {
                 </Link>
             )}
         />
-
-        // <StyledList>
-        //     {companyList.map((item) => {
-        //         return (
-        //             <Link to={`/profil/${item._id}`} key={item._id}>
-        //                 <StyledListItem>
-        //                     <Typography.Title level={4}>{item.companyName}</Typography.Title>
-        //                     <Typography.Paragraph>{item.companyDescription}</Typography.Paragraph>
-        //                     <Typography.Text type='secondary'>{item.createdAt}</Typography.Text>
-        //                 </StyledListItem>
-        //             </Link>
-        //         );
-        //     })}
-        // </StyledList>
     );
 };
 

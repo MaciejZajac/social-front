@@ -12,11 +12,12 @@ const CompleteProfile = () => {
 
     const updateProfile = async (data: any) => {
         try {
-            await axios
+            const updatedUser = await axios
                 .put(`/user/${user?.userId}`, {
                     ...data,
                 })
                 .then((response) => response.data);
+
             history.replace('/dashboard');
         } catch (err) {
             console.error('error', err);
@@ -41,10 +42,10 @@ const CompleteProfile = () => {
                 <Col md={{ span: 16, offset: 4 }}>
                     <Form form={form} name='control-hooks' onFinish={onFinish}>
                         <Form.Item name='companyName' label='Nazwa firmy' rules={[{ required: true }]}>
-                            <Input />
+                            <Input placeholder='Google, Netguru, Sii...' />
                         </Form.Item>
                         <Form.Item name='companyType' label='Typ firmy' rules={[{ required: true }]}>
-                            <Select placeholder='Select type of your company'>
+                            <Select placeholder='Typ firmy'>
                                 <Option value='startup'>Startup</Option>
                                 <Option value='software_house'>Software House</Option>
                                 <Option value='ecommerce'>E-commerce</Option>
@@ -52,14 +53,17 @@ const CompleteProfile = () => {
                                 <Option value='other'>Other</Option>
                             </Select>
                         </Form.Item>
+                        <Form.Item name='location' label='Lokalizacja firmy' rules={[{ required: true }]}>
+                            <Input placeholder='Warszawa, Kraków...' />
+                        </Form.Item>
                         <Form.Item name='shortDescription' label='Krótki opis firmy' rules={[{ required: true }]}>
-                            <Input />
+                            <Input placeholder='Lider w Polsce a nawet na świecie' />
                         </Form.Item>
                         <Form.Item name='companyURL' label='Adres URL firmy' rules={[{ required: true }]}>
-                            <Input />
+                            <Input placeholder='google.com' />
                         </Form.Item>
                         <Form.Item name='linkedin' label='URL profilu Linkedin'>
-                            <Input />
+                            <Input placeholder='linkedin.com/google' />
                         </Form.Item>
                         <Form.Item>
                             <Button type='primary' htmlType='submit' size='large'>

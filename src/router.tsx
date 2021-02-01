@@ -14,6 +14,7 @@ import RegisterConfirm from './containers/RegisterConfirm';
 import AccountActivated from './containers/AccountActivated';
 import NotFoundPage from './containers/NotFoundPage';
 import CompleteProfile from './containers/CompleteProfile';
+import PublicProfile from './containers/PublicProfile';
 
 const Router = () => {
     return (
@@ -27,6 +28,7 @@ const Router = () => {
             <Route exact path='/registerconfirm' component={RegisterConfirm} />
             <Route exact path='/activateaccount/:token' component={AccountActivated} />
             <ProtectedRoute exact path='/dashboard' component={Dashboard} />
+            <ProtectedRoute exact path='/dashboard/profilpubliczny' component={PublicProfile} />
             <ProtectedRoute exact path='/dashboard/dodajoferte' component={AddNewOffer} />
             <ProtectedRoute exact path='/dashboard/completeyourprofile' component={CompleteProfile} />
             <ProtectedRoute exact path='/dashboard/oferta/:id' component={OfferDetails} />

@@ -3,28 +3,44 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import DashboardOfferList from '../components/lists/DashboardOfferList';
+import ProfileData from '../components/profile/ProfileData';
 import { UserContext } from '../context/UserContext';
 
-interface IUserDetails {
+export interface IDashboardOffer {
+    createdAt: string;
+    jobDescription: string;
+    jobTitle: string;
+    owner: {
+        _id: string;
+        email: string;
+    };
+    pensionFrom: number;
+    pensionTo: number;
+    requiredSkills: string[];
+    updatedAt: string;
+    _id: string;
+}
+export interface IUserDetails {
     companyName: string;
     createdAt: string;
     email: string;
     hasCompanyProfile: boolean;
-    linkedin: string;
     numberOfOffers: number;
     shortDescription: string;
+    linkedin: string;
+    companyUrl: string;
     userRole: string;
+    location: string;
+    companyPublicProfile: string;
     _id: string;
 }
 const Dashboard = () => {
     const { user } = useContext(UserContext);
     const history = useHistory();
-    if (!user?.companyName) {
-        history.replace('/dashboard/completeyourprofile');
-    }
 
     const [loading, setLoading] = useState(false);
-    const [offerList, setOfferList] = useState([]);
+    const [userLoading, setUserLoading] = useState(false);
+    const [offerList, setOfferList] = useState<IDashboardOffer[]>([]);
     const [userDetails, setUserDetails] = useState<IUserDetails | undefined>(undefined);
 
     const getOffers = async () => {
@@ -44,10 +60,15 @@ const Dashboard = () => {
 
     const getUserDetails = async () => {
         try {
+            setUserLoading(true);
             const foundUser = await axios.get(`/user/current`).then((result) => result.data?.user);
-
+            setUserLoading(false);
+            if (!foundUser?.companyName) {
+                history.replace('/dashboard/completeyourprofile');
+            }
             setUserDetails(foundUser);
         } catch (err) {
+            setUserLoading(false);
             console.log('err', err);
             message.error('Coś poszło nie tak');
         }
@@ -58,26 +79,30 @@ const Dashboard = () => {
         getOffers();
     }, []);
 
+    if (!userDetails) return <div />;
     return (
         <>
             <Row style={{ marginTop: '2rem' }}>
                 <Col md={{ span: 16, offset: 4 }}>
-                    <Typography.Title level={2}>Twoje dane</Typography.Title>
-                    {console.log('userDetails', userDetails)}
-                    Email: <strong>{userDetails?.email}</strong>
-                    <br />
-                    Nazwa firmy: <strong>{userDetails?.companyName}</strong>
-                    <br />
-                    Krótki opis: <strong>{userDetails?.shortDescription}</strong>
-                    <br />
-                    Liczba ofert: <strong>{userDetails?.numberOfOffers}</strong>
-                    <br />
-                    Publiczny profil firmy: <strong>{userDetails?.hasCompanyProfile ? 'Tak' : 'Nie'}</strong>
-                    <br />
-                    Konto utworzono: <strong>{userDetails?.createdAt}</strong>
-                    <br />
+                    <ProfileData data={userDetails} />
+                    {!userDetails.companyPublicProfile && (
+                        <Button type='primary'>
+                            <Link to='/dashboard/profilpubliczny'>Dodaj profil publiczny</Link>
+                        </Button>
+                    )}
                 </Col>
             </Row>
+
+            {userDetails.companyPublicProfile && (
+                <Row style={{ marginTop: '2rem' }}>
+                    <Col md={{ span: 16, offset: 4 }}>
+                        <Typography.Title level={2}>Profil publiczny</Typography.Title>
+                        <Button type='primary'>
+                            <Link to='#'>Edytuj profil</Link>
+                        </Button>
+                    </Col>
+                </Row>
+            )}
 
             <Row style={{ marginTop: '2rem' }}>
                 <Col md={{ span: 16, offset: 4 }}>

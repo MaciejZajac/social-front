@@ -1,23 +1,12 @@
-import { Col, message, Pagination, Row, Space, Spin, Typography } from 'antd';
+import { Col, message, Pagination, Row, Spin, Typography } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import HomeList from '../components/lists/HomeList';
-
-export interface IOfferListItem {
-    _id: string;
-    title: string;
-    companyName: string;
-    location: string;
-    pensionFrom: number;
-    pensionTo: number;
-    isRemoteFriendly: boolean;
-    technologiesRequired: string[];
-}
+import { IDashboardOffer } from './Dashboard';
 
 const Home = () => {
     const [loading, setLoading] = useState(true);
-    const [offerList, setOfferList] = useState<IOfferListItem[]>([]);
+    const [offerList, setOfferList] = useState<IDashboardOffer[]>([]);
     const [totalCount, setTotalCount]: any = useState(0);
 
     const getAllOffers = async (pageNumber: number = 1, pageSize: number = 5) => {

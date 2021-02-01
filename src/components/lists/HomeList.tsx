@@ -1,11 +1,11 @@
-import { Space, Tag, Typography } from 'antd';
+import { Space, Tag } from 'antd';
 import { List } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { HomeOutlined } from '@ant-design/icons';
-import { IOfferListItem } from '../../containers/Home';
+import { IDashboardOffer } from '../../containers/Dashboard';
 
 const StyledListItem = styled(List.Item)`
     box-shadow: 0px 0px 16px #dddddd;
@@ -21,7 +21,7 @@ const StyledListItem = styled(List.Item)`
 `;
 
 interface IHomeListProps {
-    offerList: IOfferListItem[];
+    offerList: IDashboardOffer[];
 }
 
 const HomeList = ({ offerList }: IHomeListProps) => {
@@ -42,8 +42,10 @@ const HomeList = ({ offerList }: IHomeListProps) => {
                             }
                             title={
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <div>Senior Front-end Engineer</div>
-                                    <div>10 000 - 14 500 PLN</div>
+                                    <div>{item.jobTitle}</div>
+                                    <div>
+                                        {item.pensionFrom} - {item.pensionTo} PLN
+                                    </div>
                                 </div>
                             }
                             description={

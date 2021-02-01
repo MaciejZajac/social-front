@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { IDashboardOffer } from '../../containers/Dashboard';
 import { UserContext } from '../../context/UserContext';
 
 const StyledList = styled.ul`
@@ -18,12 +19,13 @@ const StyledListItem = styled.li`
 `;
 
 interface ICompanyListProps {
-    offerList: any;
+    offerList: IDashboardOffer[];
     getOffers: Function;
 }
 
 const DashboardOfferList = ({ offerList, getOffers }: ICompanyListProps) => {
     const { user } = useContext(UserContext);
+    console.log('offerList', offerList);
     const [deleteLoading, setDeleteLoading] = useState(false);
 
     const handleDeleteOffer = async (id: string) => {
@@ -42,16 +44,18 @@ const DashboardOfferList = ({ offerList, getOffers }: ICompanyListProps) => {
 
     return (
         <StyledList>
-            {offerList.map((item: any) => {
+            {offerList.map((item) => {
                 return (
                     <StyledListItem key={item._id}>
                         <Space direction='horizontal' size={20} wrap>
-                            <Typography.Title level={4}>{item.title}</Typography.Title>
+                            <Typography.Title level={4}>{item.jobTitle}</Typography.Title>
                             <Typography.Text>{item.owner.email}</Typography.Text>
                         </Space>
 
-                        <Typography.Paragraph>{item.description}</Typography.Paragraph>
-
+                        <Typography.Paragraph>{item.jobDescription}</Typography.Paragraph>
+                        <Typography.Paragraph>
+                            Pensja: {item.pensionFrom} - {item.pensionTo} PLN
+                        </Typography.Paragraph>
                         <Space direction='horizontal' size={30} wrap>
                             <Button
                                 type='primary'
