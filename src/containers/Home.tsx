@@ -25,10 +25,9 @@ const Home = () => {
             setLoading(true);
 
             const { offerList, totalCount } = await axios
-                .get(`http://localhost:5000/api/offer?page=${pageNumber}&limit=${pageSize}`)
+                .get(`/offer?page=${pageNumber}&limit=${pageSize}`)
                 .then((response) => response.data);
             setOfferList(offerList);
-            console.log('totalCount', totalCount);
             setTotalCount(totalCount);
 
             setLoading(false);

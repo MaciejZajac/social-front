@@ -12,7 +12,7 @@ const RegisterForm = () => {
         try {
             const { email, password } = values;
             await axios
-                .post(`http://localhost:5000/api/user/register`, {
+                .post(`/user/register`, {
                     email,
                     password,
                 })
@@ -28,7 +28,7 @@ const RegisterForm = () => {
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        // console.log('Failed:', errorInfo);
     };
 
     return (

@@ -5,6 +5,17 @@ import { Link, useHistory } from 'react-router-dom';
 import DashboardOfferList from '../components/lists/DashboardOfferList';
 import { UserContext } from '../context/UserContext';
 
+interface IUserDetails {
+    companyName: string;
+    createdAt: string;
+    email: string;
+    hasCompanyProfile: boolean;
+    linkedin: string;
+    numberOfOffers: number;
+    shortDescription: string;
+    userRole: string;
+    _id: string;
+}
 const Dashboard = () => {
     const { user } = useContext(UserContext);
     const history = useHistory();
@@ -14,13 +25,12 @@ const Dashboard = () => {
 
     const [loading, setLoading] = useState(false);
     const [offerList, setOfferList] = useState([]);
+    const [userDetails, setUserDetails] = useState<IUserDetails | undefined>(undefined);
 
     const getOffers = async () => {
         try {
             setLoading(true);
-            const offerList = await axios
-                .get(`http://localhost:5000/api/offer?userId=${user?.userId}`)
-                .then((result) => result.data?.offerList);
+            const offerList = await axios.get(`/offer?userId=${user?.userId}`).then((result) => result.data?.offerList);
             setLoading(false);
 
             setOfferList(offerList);
@@ -32,7 +42,19 @@ const Dashboard = () => {
         }
     };
 
+    const getUserDetails = async () => {
+        try {
+            const foundUser = await axios.get(`/user/current`).then((result) => result.data?.user);
+
+            setUserDetails(foundUser);
+        } catch (err) {
+            console.log('err', err);
+            message.error('Coś poszło nie tak');
+        }
+    };
+
     useEffect(() => {
+        getUserDetails();
         getOffers();
     }, []);
 
@@ -41,7 +63,19 @@ const Dashboard = () => {
             <Row style={{ marginTop: '2rem' }}>
                 <Col md={{ span: 16, offset: 4 }}>
                     <Typography.Title level={2}>Twoje dane</Typography.Title>
-                    Email: {user?.email}
+                    {console.log('userDetails', userDetails)}
+                    Email: <strong>{userDetails?.email}</strong>
+                    <br />
+                    Nazwa firmy: <strong>{userDetails?.companyName}</strong>
+                    <br />
+                    Krótki opis: <strong>{userDetails?.shortDescription}</strong>
+                    <br />
+                    Liczba ofert: <strong>{userDetails?.numberOfOffers}</strong>
+                    <br />
+                    Publiczny profil firmy: <strong>{userDetails?.hasCompanyProfile ? 'Tak' : 'Nie'}</strong>
+                    <br />
+                    Konto utworzono: <strong>{userDetails?.createdAt}</strong>
+                    <br />
                 </Col>
             </Row>
 

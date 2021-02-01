@@ -15,18 +15,10 @@ const NewOfferForm = () => {
         try {
             const { title, description } = values;
             await axios
-                .post(
-                    `http://localhost:5000/api/offer/`,
-                    {
-                        title,
-                        description,
-                    },
-                    {
-                        headers: {
-                            authorization: 'Bearer ' + user?.token,
-                        },
-                    }
-                )
+                .post(`/offer/`, {
+                    title,
+                    description,
+                })
                 .then((response) => response.data);
             setLoading(false);
             form.resetFields();
@@ -39,7 +31,7 @@ const NewOfferForm = () => {
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        // console.log('Failed:', errorInfo);
     };
 
     return (

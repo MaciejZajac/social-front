@@ -29,11 +29,7 @@ const DashboardOfferList = ({ offerList, getOffers }: ICompanyListProps) => {
     const handleDeleteOffer = async (id: string) => {
         try {
             setDeleteLoading(true);
-            await axios.delete(`http://localhost:5000/api/offer/${id}`, {
-                headers: {
-                    Authorization: 'Bearer ' + user?.token,
-                },
-            });
+            await axios.delete(`/offer/${id}`);
             setDeleteLoading(false);
 
             getOffers();

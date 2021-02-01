@@ -23,7 +23,7 @@ const CompanyProfiles = () => {
             setLoading(true);
 
             const { companyProfiles, totalCount } = await axios
-                .get(`http://localhost:5000/api/companyProfile?page=${pageNumber}&limit=${pageSize}`)
+                .get(`/companyProfile?page=${pageNumber}&limit=${pageSize}`)
                 .then((response) => response.data);
 
             console.log('companyProfiles', companyProfiles);

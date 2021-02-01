@@ -13,9 +13,8 @@ const CompanyProfileDetails = () => {
         try {
             setLoading(true);
             const { companyProfile } = await axios
-                .get(`http://localhost:5000/api/companyProfile/${profileId}`)
+                .get(`/companyProfile/${profileId}`)
                 .then((response) => response.data);
-            console.log('companyProfile', companyProfile);
             setProfile(companyProfile);
             setLoading(false);
         } catch (err) {

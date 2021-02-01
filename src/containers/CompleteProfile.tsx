@@ -12,18 +12,10 @@ const CompleteProfile = () => {
 
     const updateProfile = async (data: any) => {
         try {
-            const response = await axios
-                .put(
-                    `http://localhost:5000/api/user/${user?.userId}`,
-                    {
-                        ...data,
-                    },
-                    {
-                        headers: {
-                            authorization: 'Bearer ' + user?.token,
-                        },
-                    }
-                )
+            await axios
+                .put(`/user/${user?.userId}`, {
+                    ...data,
+                })
                 .then((response) => response.data);
             history.replace('/dashboard');
         } catch (err) {

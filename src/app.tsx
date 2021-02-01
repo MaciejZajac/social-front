@@ -4,6 +4,7 @@ import Layout from './Layout/Layout';
 import { UserProvider } from './context/UserContext';
 import 'antd/dist/antd.css';
 import Router from './router';
+import axios from 'axios';
 
 const App = () => {
     return (

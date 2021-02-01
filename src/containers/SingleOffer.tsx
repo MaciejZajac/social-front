@@ -12,8 +12,7 @@ const SingleOffer = () => {
         try {
             setLoading(true);
 
-            const data = await axios.get(`http://localhost:5000/api/offer/${params?.id}`).then((result) => result.data);
-            console.log('data', data);
+            const data = await axios.get(`/offer/${params?.id}`).then((result) => result.data);
             setLoading(false);
             setOffer(data.offer);
         } catch (err) {

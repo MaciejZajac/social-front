@@ -11,9 +11,7 @@ const AccountActivated = () => {
     const handleAccountActivation = async () => {
         try {
             setLoading(true);
-            const { user } = await axios
-                .get(`http://localhost:5000/api/user/active/${token}`)
-                .then((response) => response.data);
+            const { user } = await axios.get(`/user/active/${token}`).then((response) => response.data);
 
             if (user.active) {
                 setLoading(false);

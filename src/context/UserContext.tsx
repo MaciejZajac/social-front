@@ -29,13 +29,11 @@ const UserProvider: FunctionComponent = ({ children }) => {
     const history = useHistory();
     const [loadingUser, setLoadingUser] = useState(true);
     const [user, setUser] = useState({ email: '', token: '', userId: '', companyName: '' });
-    console.log('process.env', process.env);
     useEffect(() => {
         const token = Cookies.get('token') as string;
         if (token) {
             try {
                 const userData: any = jwt.verify(token, process.env.REACT_APP_JWT_KEY!);
-                console.log('userData', userData);
                 const { email, userId, companyName } = userData;
                 setUser({ email, token, userId, companyName });
                 setLoadingUser(false);
@@ -49,18 +47,18 @@ const UserProvider: FunctionComponent = ({ children }) => {
     const login = async ({ email, password, roleName }: any) => {
         try {
             const result = await axios
-                .post(`http://localhost:5000/api/user/login`, {
+                .post(`/user/login`, {
                     email,
                     password,
                     roleName,
                 })
                 .then((response) => response.data);
             const { token } = result;
+            console.log('result', result);
             const userData: any = jwt.verify(token, process.env.REACT_APP_JWT_KEY!);
             const { email: userEmail, userId, companyName } = userData;
             setUser({ email: userEmail, token, userId, companyName });
             Cookies.set('token', token);
-            console.log('1');
             history.push('/dashboard');
         } catch (err) {
             console.log('err', err);

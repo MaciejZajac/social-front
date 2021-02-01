@@ -2,11 +2,15 @@ import React, { FunctionComponent, useContext } from 'react';
 import { Layout } from 'antd';
 import { UserContext } from '../context/UserContext';
 import TopHeader from '../components/menu/TopHeader';
+import axios from 'axios';
 
 const { Header, Footer, Content } = Layout;
 
 const LayoutHOC: FunctionComponent = ({ children }) => {
-    const { loadingUser } = useContext(UserContext);
+    const { loadingUser, user } = useContext(UserContext);
+
+    axios.defaults.baseURL = 'http://localhost:5000/api';
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + user?.token;
 
     if (loadingUser) {
         return <div />;

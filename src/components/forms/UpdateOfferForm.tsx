@@ -19,18 +19,10 @@ const UpdateOfferForm = ({ offer }: IUpdateOfferForm) => {
         try {
             const { title, description } = values;
 
-            await axios.put(
-                `http://localhost:5000/api/offer/${params?.id}`,
-                {
-                    title,
-                    description,
-                },
-                {
-                    headers: {
-                        authorization: 'Bearer ' + user?.token,
-                    },
-                }
-            );
+            await axios.put(`/offer/${params?.id}`, {
+                title,
+                description,
+            });
             setLoading(false);
             message.success('Udało się zaktualizować ofertę');
         } catch (err) {
@@ -40,7 +32,7 @@ const UpdateOfferForm = ({ offer }: IUpdateOfferForm) => {
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        // console.log('Failed:', errorInfo);
     };
 
     return (
