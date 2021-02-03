@@ -5,7 +5,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { HomeOutlined } from '@ant-design/icons';
-import { IDashboardOffer } from '../../containers/Dashboard';
+import { IDashboardOffer } from '../../types/productTypes';
 
 const StyledListItem = styled(List.Item)`
     box-shadow: 0px 0px 16px #dddddd;
@@ -20,11 +20,11 @@ const StyledListItem = styled(List.Item)`
     }
 `;
 
-interface IHomeListProps {
+interface IJobOfferListProps {
     offerList: IDashboardOffer[];
 }
 
-const HomeList = ({ offerList }: IHomeListProps) => {
+const JobOfferList = ({ offerList }: IJobOfferListProps) => {
     return (
         <List
             itemLayout='vertical'
@@ -77,4 +77,4 @@ const HomeList = ({ offerList }: IHomeListProps) => {
     );
 };
 
-export default HomeList;
+export default JobOfferList;

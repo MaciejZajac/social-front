@@ -18,12 +18,8 @@ const LoginForm = () => {
         }
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        // console.log('Failed:', errorInfo);
-    };
-
     return (
-        <Form name='basic' initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form name='basic' initialValues={{ remember: true }} onFinish={onFinish}>
             <Typography.Title level={2}>Logowanie</Typography.Title>
             <Form.Item label='Email' name='email' rules={[{ required: true, message: 'Please input your email!' }]}>
                 <Input />

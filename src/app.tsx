@@ -1,10 +1,9 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import Layout from './Layout/Layout';
 import { UserProvider } from './context/UserContext';
-import 'antd/dist/antd.css';
+import { BrowserRouter } from 'react-router-dom';
+import Layout from './containers/layout/Layout';
 import Router from './router';
-import axios from 'axios';
+import 'antd/dist/antd.css';
 
 const App = () => {
     return (

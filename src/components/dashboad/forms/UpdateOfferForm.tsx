@@ -2,14 +2,13 @@ import { Button, Form, Input, message } from 'antd';
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
+import { UserContext } from '../../../context/UserContext';
 
 interface IUpdateOfferForm {
     offer: any;
 }
 
 const UpdateOfferForm = ({ offer }: IUpdateOfferForm) => {
-    const { user } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
     const params: any = useParams();
@@ -31,10 +30,6 @@ const UpdateOfferForm = ({ offer }: IUpdateOfferForm) => {
         }
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        // console.log('Failed:', errorInfo);
-    };
-
     return (
         <Form
             name='basic'
@@ -43,7 +38,6 @@ const UpdateOfferForm = ({ offer }: IUpdateOfferForm) => {
                 ...offer,
             }}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
         >
             <Form.Item
                 label='Stanowisko'

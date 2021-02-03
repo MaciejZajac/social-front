@@ -26,12 +26,8 @@ const CompanyProfileForm = () => {
         }
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
-
     return (
-        <Form name='basic' layout='vertical' onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form name='basic' layout='vertical' onFinish={onFinish}>
             <Form.Item label='Narzędzia wykorzystywane w firmie' name='skillsInCompany' rules={[{ required: true }]}>
                 <Select mode='tags' placeholder='React, TypeScript, Scrum...' style={{ width: '100%' }}>
                     <Select.Option key={1} value={'JavaScript'}>

@@ -54,7 +54,6 @@ const UserProvider: FunctionComponent = ({ children }) => {
                 })
                 .then((response) => response.data);
             const { token } = result;
-            console.log('result', result);
             const userData: any = jwt.verify(token, process.env.REACT_APP_JWT_KEY!);
             const { email: userEmail, userId, companyName } = userData;
             setUser({ email: userEmail, token, userId, companyName });

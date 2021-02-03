@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Form, Input, Button, message, Select } from 'antd';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
+import { UserContext } from '../../../context/UserContext';
 
 const NewOfferForm = () => {
     const history = useHistory();
@@ -27,19 +27,8 @@ const NewOfferForm = () => {
         }
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        // console.log('Failed:', errorInfo);
-    };
-
     return (
-        <Form
-            name='basic'
-            form={form}
-            layout='vertical'
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-        >
+        <Form name='basic' form={form} layout='vertical' initialValues={{ remember: true }} onFinish={onFinish}>
             <Form.Item
                 label='Stanowisko'
                 name='jobTitle'

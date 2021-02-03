@@ -3,7 +3,7 @@ import React from 'react';
 
 const RegisterConfirm = () => {
     return (
-        <Row style={{ marginTop: '2rem' }}>
+        <Row>
             <Col md={{ span: 8, offset: 8 }}>
                 <Typography.Title level={1}>Udało się stworzyć konto</Typography.Title>
                 <Typography.Paragraph>Na twój mail został wysłany link aktywacyjny</Typography.Paragraph>

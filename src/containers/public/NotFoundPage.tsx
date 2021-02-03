@@ -3,7 +3,7 @@ import React from 'react';
 
 const NotFoundPage = () => {
     return (
-        <Row style={{ marginTop: '2rem' }}>
+        <Row>
             <Col md={{ span: 16, offset: 4 }}>404 Nie ma takiej strony :(</Col>
         </Row>
     );

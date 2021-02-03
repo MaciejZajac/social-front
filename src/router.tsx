@@ -1,20 +1,20 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Home from './containers/Home';
-import Login from './containers/Login';
-import Register from './containers/Register';
-import Dashboard from './containers/Dashboard';
+import Home from './containers/public/Home';
+import Login from './containers/auth/Login';
+import Register from './containers/auth/Register';
+import Dashboard from './containers/private/Dashboard';
 import ProtectedRoute from './PrivateRoute';
-import AddNewOffer from './containers/AddNewOffer';
-import OfferDetails from './containers/OfferDetails';
-import SingleOffer from './containers/SingleOffer';
-import CompanyProfiles from './containers/CompanyProfiles';
-import CompanyProfileDetails from './containers/CompanyProfileDetails';
-import RegisterConfirm from './containers/RegisterConfirm';
-import AccountActivated from './containers/AccountActivated';
-import NotFoundPage from './containers/NotFoundPage';
-import CompleteProfile from './containers/CompleteProfile';
-import PublicProfile from './containers/PublicProfile';
+import AddNewOffer from './containers/private/AddNewOffer';
+import OfferDetails from './containers/public/jobOffers/OfferDetails';
+import SingleOffer from './containers/public/jobOffers/SingleOffer';
+import CompanyProfiles from './containers/public/companyProfiles/CompanyProfiles';
+import CompanyProfileDetails from './containers/public/companyProfiles/CompanyProfileDetails';
+import RegisterConfirm from './containers/auth/RegisterConfirm';
+import AccountActivated from './containers/auth/AccountActivated';
+import NotFoundPage from './containers/public/NotFoundPage';
+import CompleteProfile from './containers/private/CompleteProfile';
+import PublicProfile from './containers/public/companyProfiles/PublicProfile';
 
 const Router = () => {
     return (

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext } from 'react';
 import { Layout } from 'antd';
-import { UserContext } from '../context/UserContext';
-import TopHeader from '../components/menu/TopHeader';
+import { UserContext } from '../../context/UserContext';
+import TopHeader from '../../components/layout/TopHeader';
 import axios from 'axios';
 
 const { Header, Footer, Content } = Layout;
@@ -21,7 +21,7 @@ const LayoutHOC: FunctionComponent = ({ children }) => {
             <Header>
                 <TopHeader />
             </Header>
-            <Content style={{ background: 'white' }}>{children}</Content>
+            <Content style={{ background: 'white', padding: '2rem 0' }}>{children}</Content>
             <Footer style={{ textAlign: 'center' }}>Stopka</Footer>
         </Layout>
     );

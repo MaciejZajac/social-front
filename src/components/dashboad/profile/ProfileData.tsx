@@ -1,8 +1,11 @@
 import { Typography } from 'antd';
 import React from 'react';
-import { IUserDetails } from '../../containers/Dashboard';
+import { IUserDetails } from '../../../types/userTypes';
 
-const ProfileData = ({ data }: { data: IUserDetails }) => {
+interface IProfileDataProps {
+    data: IUserDetails;
+}
+const ProfileData = ({ data }: IProfileDataProps): JSX.Element => {
     return (
         <>
             <Typography.Title level={2}>Twoje dane</Typography.Title>

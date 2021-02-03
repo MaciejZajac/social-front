@@ -2,12 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Space, Typography, List, Avatar, Tag } from 'antd';
 import { Link } from 'react-router-dom';
-import { IUserDetails } from '../../containers/Dashboard';
-
-const StyledList = styled.ul`
-    padding: 0;
-    list-style: none;
-`;
+import { IUserDetails } from '../../types/userTypes';
 
 const StyledListItem = styled.li`
     box-shadow: 0px 0px 16px #dddddd;
@@ -27,7 +22,7 @@ const CompanyList = ({ companyList }: ICompanyListProps) => {
             size='large'
             dataSource={companyList}
             renderItem={(item) => (
-                <Link to={`/oferta/${item._id}`} key={item._id}>
+                <Link to={`/profil/${item._id}`} key={item._id}>
                     <StyledListItem style={{ margin: '25px 0' }}>
                         <List.Item.Meta
                             avatar={

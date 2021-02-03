@@ -3,8 +3,8 @@ import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { IDashboardOffer } from '../../containers/Dashboard';
-import { UserContext } from '../../context/UserContext';
+import { UserContext } from '../../../context/UserContext';
+import { IDashboardOffer } from '../../../types/productTypes';
 
 const StyledList = styled.ul`
     padding: 0;
@@ -20,12 +20,9 @@ const StyledListItem = styled.li`
 
 interface ICompanyListProps {
     offerList: IDashboardOffer[];
-    getOffers: Function;
 }
 
-const DashboardOfferList = ({ offerList, getOffers }: ICompanyListProps) => {
-    const { user } = useContext(UserContext);
-    console.log('offerList', offerList);
+const DashboardOfferList = ({ offerList }: ICompanyListProps) => {
     const [deleteLoading, setDeleteLoading] = useState(false);
 
     const handleDeleteOffer = async (id: string) => {
@@ -33,8 +30,6 @@ const DashboardOfferList = ({ offerList, getOffers }: ICompanyListProps) => {
             setDeleteLoading(true);
             await axios.delete(`/offer/${id}`);
             setDeleteLoading(false);
-
-            getOffers();
         } catch (err) {
             setDeleteLoading(false);
             console.log('err', err);
