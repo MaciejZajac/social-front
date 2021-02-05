@@ -28,6 +28,22 @@ const UserProvider: FunctionComponent = ({ children }) => {
     const [loadingUser, setLoadingUser] = useState(true);
     const [user, setUser] = useState<IUser | undefined>(undefined);
 
+    const refreshToken = async (token: string) => {
+        try {
+            const userData: any = jwt.verify(token, process.env.REACT_APP_JWT_KEY!);
+            if (Date.now() + 1000 * 60 * 10 > userData.exp) {
+                const { token } = await axios.post('/user/refreshtoken').then((res) => res.data);
+                const userData = jwt.verify(token, process.env.REACT_APP_JWT_KEY!);
+                const { email: userEmail, userId, location } = userData as IUser;
+                setUser({ email: userEmail, token, userId, location });
+                Cookies.set('token', token);
+            }
+        } catch (err) {
+            console.log('err', err);
+            logout();
+        }
+    };
+
     useEffect(() => {
         const token = Cookies.get('token') as string;
         if (token) {
@@ -37,9 +53,7 @@ const UserProvider: FunctionComponent = ({ children }) => {
                 setUser({ email, token, userId, location });
                 setLoadingUser(false);
             } catch (err) {
-                const error = new Error(err);
-
-                if (error.message === 'TokenExpiredError: jwt expired') {
+                if (err.response?.data?.message === 'jwt expired') {
                     notification.error({
                         message: 'Token expired',
                         description: 'Try logging again',
@@ -52,7 +66,8 @@ const UserProvider: FunctionComponent = ({ children }) => {
                         placement: 'bottomRight',
                     });
                 }
-                Cookies.remove('token');
+
+                logout();
             }
         }
         setLoadingUser(false);

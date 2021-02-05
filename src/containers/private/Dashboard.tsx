@@ -8,6 +8,7 @@ import { UserContext } from '../../context/UserContext';
 import { IDashboardOffer } from '../../types/productTypes';
 import { IUserDetails } from '../../types/userTypes';
 import useQuery from '../../hooks/useQuery';
+import { createQueryString } from '../../hooks/createQueryString';
 
 interface IData {
     offerList: IDashboardOffer[];
@@ -18,16 +19,15 @@ interface IUser {
 
 const Dashboard = () => {
     const history = useHistory();
+    const queryString = createQueryString({ page: 1, limit: 10 });
     const { user: contextUser } = useContext(UserContext);
     const { data, loading: offersLoading, statusCode } = useQuery({
-        url: `/offer?userId=${contextUser?.userId}&page=1&limit=20`,
+        url: `/offer?userId=${contextUser?.userId}&${queryString}`,
     });
     const { data: userData, loading: userLoading, statusCode: userStatusCode } = useQuery({ url: `/user/current` });
     const { offerList }: IData = data;
     const { user }: IUser = userData;
-    console.log('userData', { ...userData });
     useEffect(() => {
-        console.log('contextUser', contextUser);
         if (!contextUser?.location) {
             history.push('/dashboard/completeyourprofile');
         }
@@ -38,7 +38,7 @@ const Dashboard = () => {
     return (
         <>
             <Row style={{ margin: '20px 0' }}>
-                <Col md={{ span: 16, offset: 4 }}>
+                <Col sm={{ span: 24, offset: 0 }} md={{ span: 22, offset: 1 }} lg={{ span: 20, offset: 2 }}>
                     <ProfileData data={user} />
                     {/* {!user.companyPublicProfile && (
                         <Button type='primary'>
@@ -62,7 +62,7 @@ const Dashboard = () => {
             )} */}
 
             <Row style={{ margin: '40px 0' }}>
-                <Col md={{ span: 16, offset: 4 }}>
+                <Col sm={{ span: 24, offset: 0 }} md={{ span: 22, offset: 1 }} lg={{ span: 20, offset: 2 }}>
                     <Space direction='horizontal' align='baseline'>
                         <Typography.Title level={2}>Moje oferty</Typography.Title>
                         <Button type='default'>

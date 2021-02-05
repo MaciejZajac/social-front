@@ -37,7 +37,7 @@ const JobOfferList = ({ offerList }: IJobOfferListProps) => {
                             avatar={
                                 <Avatar
                                     style={{ width: '70px', height: '70px' }}
-                                    src={`https://logo.clearbit.com/clawrock.com`}
+                                    src={'https://logo.clearbit.com/' + item.owner.companyUrl}
                                 />
                             }
                             title={
@@ -52,23 +52,26 @@ const JobOfferList = ({ offerList }: IJobOfferListProps) => {
                                 <>
                                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                         <div>
-                                            <Space style={{ marginRight: '15px' }}>Nazwa Firmy</Space>
+                                            <Space style={{ marginRight: '15px' }}>{item.owner.companyName}</Space>
                                             <Space size={6} direction='horizontal'>
                                                 <HomeOutlined />
-                                                Warszawa
+                                                {item.owner.location}
                                             </Space>
                                         </div>
                                         <div>remote friendly</div>
                                     </div>
+                                    {item.owner.shortDescription}
                                 </>
                             }
                         />
 
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div>
-                                <Tag>React</Tag> <Tag>JavaScript</Tag> <Tag>HTML</Tag> <Tag>CSS</Tag>
+                                {item.requiredSkills.map((str) => (
+                                    <Tag key={str}>{str}</Tag>
+                                ))}
                             </div>
-                            <div>Oferta dodana: 29.01.2021</div>
+                            <div>Oferta dodana: {item.updatedAt}</div>
                         </div>
                     </StyledListItem>
                 </Link>

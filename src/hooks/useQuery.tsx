@@ -14,13 +14,11 @@ const useQuery = ({ url }: IUseQueryProps) => {
             try {
                 setLoading(true);
                 const response = await axios.get(url);
-                console.log('response', response);
                 setStatusCode(response.status);
                 setData(response.data);
                 setLoading(false);
             } catch (err) {
                 setLoading(false);
-                console.log('err', err);
             }
         };
 

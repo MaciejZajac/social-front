@@ -32,7 +32,6 @@ const DashboardOfferTable = ({ offerList }: ICompanyListProps) => {
             setDeleteLoading(false);
         } catch (err) {
             setDeleteLoading(false);
-            console.log('err', err);
             message.error('Coś poszło nie tak');
         }
     };

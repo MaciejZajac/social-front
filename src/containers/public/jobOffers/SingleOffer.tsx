@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom';
 import JobOffer from '../../../components/joboffers/JobOffer';
 import Spinner from '../../../components/other/Spinner';
 import useQuery from '../../../hooks/useQuery';
+import { IDashboardOffer } from '../../../types/productTypes';
 
 interface IData {
-    offer: any;
+    offer: IDashboardOffer;
 }
 
 const SingleOffer = () => {
