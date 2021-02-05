@@ -1,4 +1,10 @@
 
+export interface IUser {
+    email: string;
+    location: string;
+    token: string;
+    userId: string;
+}
 export interface IUserDetails {
     companyName: string;
     createdAt: string;

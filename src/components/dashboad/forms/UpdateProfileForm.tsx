@@ -3,21 +3,35 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../../../context/UserContext';
+import { IUser } from '../../../types/userTypes';
 
 const { Option } = Select;
 
 const UpdateProfileForm = () => {
     const [form] = Form.useForm();
-    const { user } = useContext(UserContext);
+    const { user, setNewUser } = useContext(UserContext);
     const history = useHistory();
+
+    if (user?.location) {
+        history.replace('/dashboard');
+    }
 
     const updateProfile = async (data: any) => {
         try {
-            const updatedUser = await axios
+            const newUserData = await axios
                 .put(`/user/${user?.userId}`, {
                     ...data,
                 })
                 .then((response) => response.data);
+
+            const newUser: IUser = {
+                email: newUserData.email,
+                token: newUserData.token,
+                userId: newUserData.userId,
+                location: newUserData.location,
+            };
+
+            setNewUser(newUser);
 
             history.replace('/dashboard');
         } catch (err) {
@@ -50,7 +64,7 @@ const UpdateProfileForm = () => {
             <Form.Item name='shortDescription' label='Krótki opis firmy' rules={[{ required: true }]}>
                 <Input placeholder='Lider w Polsce a nawet na świecie' />
             </Form.Item>
-            <Form.Item name='companyURL' label='Adres URL firmy' rules={[{ required: true }]}>
+            <Form.Item name='companyUrl' label='Adres URL firmy' rules={[{ required: true }]}>
                 <Input placeholder='google.com' />
             </Form.Item>
             <Form.Item name='linkedin' label='URL profilu Linkedin'>

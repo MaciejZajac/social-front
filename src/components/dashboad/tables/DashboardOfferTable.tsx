@@ -1,4 +1,4 @@
-import { Button, message, Space, Typography } from 'antd';
+import { Button, message, Space, Table, Typography } from 'antd';
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -22,7 +22,7 @@ interface ICompanyListProps {
     offerList: IDashboardOffer[];
 }
 
-const DashboardOfferList = ({ offerList }: ICompanyListProps) => {
+const DashboardOfferTable = ({ offerList }: ICompanyListProps) => {
     const [deleteLoading, setDeleteLoading] = useState(false);
 
     const handleDeleteOffer = async (id: string) => {
@@ -37,9 +37,49 @@ const DashboardOfferList = ({ offerList }: ICompanyListProps) => {
         }
     };
 
+    const columns = [
+        {
+            title: 'ID',
+            dataIndex: '_id',
+            key: '_id',
+        },
+        {
+            title: 'Job title',
+            dataIndex: 'jobTitle',
+            key: 'jobTitle',
+        },
+        {
+            title: 'Pension from',
+            dataIndex: 'pensionFrom',
+            key: 'pensionFrom',
+        },
+        {
+            title: 'Pension to',
+            dataIndex: 'pensionTo',
+            key: 'pensionTo',
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (text: any, record: IDashboardOffer) => {
+                return (
+                    <Space size='middle'>
+                        <Button type='default' loading={deleteLoading}>
+                            <Link to={`/dashboard/oferta/${record._id}`}>Update</Link>
+                        </Button>
+                        <Button danger onClick={() => handleDeleteOffer(record._id)} loading={deleteLoading}>
+                            Delete
+                        </Button>
+                    </Space>
+                );
+            },
+        },
+    ];
+
     return (
         <StyledList>
-            {offerList.map((item) => {
+            <Table dataSource={offerList} columns={columns} rowKey='_id' />
+            {/* {offerList.map((item) => {
                 return (
                     <StyledListItem key={item._id}>
                         <Space direction='horizontal' size={20} wrap>
@@ -66,9 +106,9 @@ const DashboardOfferList = ({ offerList }: ICompanyListProps) => {
                         </Space>
                     </StyledListItem>
                 );
-            })}
+            })} */}
         </StyledList>
     );
 };
 
-export default DashboardOfferList;
+export default DashboardOfferTable;

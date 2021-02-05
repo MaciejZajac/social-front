@@ -17,12 +17,12 @@ const LayoutHOC: FunctionComponent = ({ children }) => {
     }
 
     return (
-        <Layout style={{ minHeight: '100vh' }}>
-            <Header>
+        <Layout style={{ minHeight: '100vh', background: 'none' }}>
+            <Header style={{ background: 'none' }}>
                 <TopHeader />
             </Header>
             <Content style={{ background: 'white', padding: '2rem 0' }}>{children}</Content>
-            <Footer style={{ textAlign: 'center' }}>Stopka</Footer>
+            <Footer style={{ textAlign: 'center', background: 'none' }}>Stopka</Footer>
         </Layout>
     );
 };

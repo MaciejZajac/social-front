@@ -1,7 +1,7 @@
 import { Button, Col, Empty, Row, Space, Typography } from 'antd';
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import DashboardOfferList from '../../components/dashboad/tables/DashboardOfferList';
+import { useContext, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import DashboardOfferTable from '../../components/dashboad/tables/DashboardOfferTable';
 import Spinner from '../../components/other/Spinner';
 import ProfileData from '../../components/dashboad/profile/ProfileData';
 import { UserContext } from '../../context/UserContext';
@@ -17,30 +17,41 @@ interface IUser {
 }
 
 const Dashboard = () => {
+    const history = useHistory();
     const { user: contextUser } = useContext(UserContext);
-    const { data, loading: offersLoading, statusCode } = useQuery({ url: `/offer?userId=${contextUser?.userId}` });
+    const { data, loading: offersLoading, statusCode } = useQuery({
+        url: `/offer?userId=${contextUser?.userId}&page=1&limit=20`,
+    });
     const { data: userData, loading: userLoading, statusCode: userStatusCode } = useQuery({ url: `/user/current` });
     const { offerList }: IData = data;
     const { user }: IUser = userData;
+    console.log('userData', { ...userData });
+    useEffect(() => {
+        console.log('contextUser', contextUser);
+        if (!contextUser?.location) {
+            history.push('/dashboard/completeyourprofile');
+        }
+    }, [contextUser]);
 
-    if (!user) return <div />;
+    if (!contextUser) return <div />;
+
     return (
         <>
-            <Row>
+            <Row style={{ margin: '20px 0' }}>
                 <Col md={{ span: 16, offset: 4 }}>
                     <ProfileData data={user} />
-                    {!user.companyPublicProfile && (
+                    {/* {!user.companyPublicProfile && (
                         <Button type='primary'>
                             <Link to='/dashboard/profilpubliczny'>Dodaj profil publiczny</Link>
                         </Button>
-                    )}
+                    )} */}
                 </Col>
             </Row>
 
-            {userLoading ? (
+            {/* {userLoading ? (
                 <Spinner />
             ) : (
-                <Row>
+                <Row style={{ margin: '20px 0' }}>
                     <Col md={{ span: 16, offset: 4 }}>
                         <Typography.Title level={2}>Profil publiczny</Typography.Title>
                         <Button type='primary'>
@@ -48,13 +59,13 @@ const Dashboard = () => {
                         </Button>
                     </Col>
                 </Row>
-            )}
+            )} */}
 
-            <Row>
+            <Row style={{ margin: '40px 0' }}>
                 <Col md={{ span: 16, offset: 4 }}>
                     <Space direction='horizontal' align='baseline'>
                         <Typography.Title level={2}>Moje oferty</Typography.Title>
-                        <Button type='primary'>
+                        <Button type='default'>
                             <Link to='/dashboard/dodajoferte'>Dodaj nową ofertę</Link>
                         </Button>
                     </Space>
@@ -63,10 +74,10 @@ const Dashboard = () => {
                             <Spinner />
                         ) : (
                             <>
-                                {offerList && offerList?.length === 0 ? (
+                                {offerList?.length === 0 ? (
                                     <Empty description='Brak dodanych ofert' />
                                 ) : (
-                                    <DashboardOfferList offerList={offerList} />
+                                    <DashboardOfferTable offerList={offerList} />
                                 )}
                             </>
                         )}

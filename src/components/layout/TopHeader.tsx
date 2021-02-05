@@ -8,7 +8,7 @@ const TopHeader = () => {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Menu theme='dark' mode='horizontal'>
+            <Menu mode='horizontal'>
                 <Menu.Item key='1'>
                     <Link to='/'>Oferty pracy</Link>
                 </Menu.Item>
@@ -17,7 +17,7 @@ const TopHeader = () => {
                 </Menu.Item>
             </Menu>
 
-            <Menu theme='dark' mode='horizontal'>
+            <Menu mode='horizontal'>
                 {user?.token ? (
                     <>
                         <Menu.Item key='3'>

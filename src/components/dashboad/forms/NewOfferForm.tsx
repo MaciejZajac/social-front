@@ -51,7 +51,7 @@ const NewOfferForm = () => {
 
             <Form.Item
                 label='Narzędzia wykorzystywane na stanowisku'
-                name='skillsInCompany'
+                name='requiredSkills'
                 rules={[{ required: true }]}
             >
                 <Select mode='tags' placeholder='React, TypeScript, Scrum...' style={{ width: '100%' }}>

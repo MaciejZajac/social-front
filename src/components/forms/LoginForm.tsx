@@ -1,45 +1,56 @@
 import React, { useContext, useState } from 'react';
-import { Form, Input, Button, Checkbox, Typography, message } from 'antd';
+import { Form, Input, Button, Checkbox, Typography, message, Alert } from 'antd';
 import { UserContext } from '../../context/UserContext';
+import { useHistory } from 'react-router-dom';
 
 const LoginForm = () => {
+    const history = useHistory();
     const { login } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const onFinish = (values: any) => {
+    const onFinish = async (values: any) => {
         setLoading(true);
-        try {
-            const { email, password } = values;
-            login({ email, password, roleName: 'COMPANY' });
-            setLoading(false);
-        } catch (err) {
-            message.error('Coś się nie udało');
-            setLoading(false);
+        const { email, password } = values;
+
+        // TODO: find some more elegant way of handling it
+        const error: any = await login({ email, password, roleName: 'COMPANY' });
+        if (error) {
+            setError(error.response.data.errors[0].message);
         }
+        history.push('/dashboard');
+
+        setLoading(false);
     };
 
     return (
-        <Form name='basic' initialValues={{ remember: true }} onFinish={onFinish}>
-            <Typography.Title level={2}>Logowanie</Typography.Title>
-            <Form.Item label='Email' name='email' rules={[{ required: true, message: 'Please input your email!' }]}>
+        <Form layout='vertical' onFinish={onFinish}>
+            <Form.Item label='Email' name='email' rules={[{ required: true, message: 'This field cannot be empty!' }]}>
                 <Input />
             </Form.Item>
 
             <Form.Item
                 label='Password'
                 name='password'
-                rules={[{ required: true, message: 'Please input your password!' }]}
+                rules={[{ required: true, message: 'This field cannot be empty!' }]}
             >
                 <Input.Password />
             </Form.Item>
 
-            <Form.Item name='remember' valuePropName='checked'>
-                <Checkbox>Remember me</Checkbox>
-            </Form.Item>
+            {error && (
+                <Alert
+                    message='Something went wrong!'
+                    description={error}
+                    type='error'
+                    closable
+                    style={{ margin: '15px 0 20px' }}
+                    onClose={() => setError('')}
+                />
+            )}
 
             <Form.Item>
                 <Button type='primary' htmlType='submit' loading={loading}>
-                    Submit
+                    Zaloguj
                 </Button>
             </Form.Item>
         </Form>
