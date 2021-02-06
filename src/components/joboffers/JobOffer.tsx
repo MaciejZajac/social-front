@@ -15,7 +15,7 @@ const JobOffer = ({ offer }: IJobOfferProps) => {
 
     return (
         <>
-            <PageHeader onBack={() => window.history.back()} title={'asd'} />
+            <PageHeader onBack={() => window.history.back()} title={'Oferta pracy ' + offer.owner.companyName} />
             <div>
                 <div style={{ display: 'flex' }}>
                     <Image
