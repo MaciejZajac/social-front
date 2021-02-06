@@ -1,11 +1,18 @@
-import { Space, Tag } from 'antd';
+import { Space, Spin, Tag } from 'antd';
 import { List } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { HomeOutlined } from '@ant-design/icons';
 import { IDashboardOffer } from '../../types/productTypes';
+import styled from 'styled-components';
+
+const StyledSpinner = styled.div`
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    text-align: center;
+`;
 
 const StyledListItem = styled(List.Item)`
     box-shadow: 0px 0px 16px #dddddd;
@@ -22,9 +29,10 @@ const StyledListItem = styled(List.Item)`
 
 interface IJobOfferListProps {
     offerList: IDashboardOffer[];
+    spinnerLoading: boolean;
 }
 
-const JobOfferList = ({ offerList }: IJobOfferListProps) => {
+const JobOfferList = ({ offerList, spinnerLoading }: IJobOfferListProps) => {
     return (
         <List
             itemLayout='vertical'
@@ -76,7 +84,13 @@ const JobOfferList = ({ offerList }: IJobOfferListProps) => {
                     </StyledListItem>
                 </Link>
             )}
-        />
+        >
+            {spinnerLoading && (
+                <StyledSpinner>
+                    <Spin size='large' />
+                </StyledSpinner>
+            )}
+        </List>
     );
 };
 

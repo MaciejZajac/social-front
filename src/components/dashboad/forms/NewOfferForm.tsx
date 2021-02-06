@@ -1,14 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, message, Select } from 'antd';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { Editor, EditorState, convertFromRaw } from 'draft-js';
 
 const NewOfferForm = () => {
     const history = useHistory();
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
-    const [testVal, setTestVal] = useState(EditorState.createEmpty());
 
     const onFinish = async (values: any) => {
         setLoading(true);
@@ -26,11 +24,6 @@ const NewOfferForm = () => {
             message.error('Coś się nie udało');
             setLoading(false);
         }
-    };
-
-    const handleDescChange = (value: any) => {
-        console.log('value', value);
-        setTestVal(convertFromRaw(value) as any);
     };
 
     return (
@@ -81,8 +74,6 @@ const NewOfferForm = () => {
                     Stwórz ofertę
                 </Button>
             </Form.Item>
-
-            <Editor editorState={testVal} onChange={() => {}} readOnly />
         </Form>
     );
 };

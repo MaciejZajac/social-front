@@ -1,21 +1,13 @@
-import { Button, message, Space, Table, Typography } from 'antd';
+import { Button, message, Space, Table } from 'antd';
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { UserContext } from '../../../context/UserContext';
 import { IDashboardOffer } from '../../../types/productTypes';
 
 const StyledList = styled.ul`
     padding: 0;
     list-style: none;
-`;
-
-const StyledListItem = styled.li`
-    box-shadow: 0px 0px 16px #dddddd;
-    border-radius: 15px;
-    padding: 15px;
-    margin: 1.75rem 0;
 `;
 
 interface ICompanyListProps {

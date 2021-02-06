@@ -1,6 +1,5 @@
-import { Col, message, PageHeader, Row } from 'antd';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { Col, PageHeader, Row } from 'antd';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import UpdateOfferForm from '../../../components/dashboad/forms/UpdateOfferForm';
 import Spinner from '../../../components/other/Spinner';
