@@ -6,7 +6,7 @@ import { IDashboardOffer } from '../../types/productTypes';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import Filters from '../../components/joboffers/Filters';
-import { createQueryString } from '../../hooks/createQueryString';
+import useOfferQuery from '../../hooks/useOfferQuery';
 
 const StyledContainer = styled.div`
     padding: 20px;
@@ -32,55 +32,56 @@ const StyledContainer = styled.div`
 interface IFilters {
     pensionFrom?: string;
     pensionTo?: string;
-    page: number;
     limit: 10;
 }
 interface IData {
     offerList: IDashboardOffer[];
     totalCount: number;
 }
+
 const Home = () => {
-    const [filterObj, setFilterObj] = useState<IFilters>({ page: 1, limit: 10 });
-    const initialParam = createQueryString({ ...filterObj });
-    const [url, setUrl] = useState<string>(`/offer?${initialParam}`);
+    const [page, setPage] = useState(1);
+    const [filters, setFilters] = useState<IFilters>({ limit: 10 });
+    const { loading, error, offers, hasMore } = useOfferQuery(filters, page);
+    // console.log('error', error);
+    // const [filterObj, setFilterObj] = useState<IFilters>({ page: 1, limit: 10 });
+    // const initialParam = createQueryString({ ...filterObj });
+    // const [url, setUrl] = useState<string>(`/offer?${initialParam}`);
 
-    const { data, loading, statusCode } = useQuery({ url });
-    const { offerList, totalCount }: IData = data;
-    const [totalList, setTotalList] = useState<IDashboardOffer[]>([]);
+    // const { data, loading, statusCode } = useQuery({ url });
+    // const { offerList, totalCount }: IData = data;
+    // const [totalList, setTotalList] = useState<IDashboardOffer[]>([]);
 
-    const [hasMore, setHasMore] = useState(true);
+    // useEffect(() => {
+    //     if (offerList) {
+    //         setTotalList([...totalList, ...offerList]);
+    //     }
+    // }, [offerList]);
 
-    useEffect(() => {
-        if (offerList) {
-            setTotalList([...totalList, ...offerList]);
-        }
-    }, [offerList]);
-
-    useEffect(() => {
-        handleFiltering();
-    }, [filterObj]);
+    // useEffect(() => {
+    //     handleFiltering();
+    // }, [filterObj]);
 
     const handleInfiniteOnLoad = () => {
-        console.log('totalList', totalList);
-        console.log('totalCount', totalCount);
-        if (totalList.length === totalCount) {
-            setHasMore(false);
-            return;
-        }
-        setFilterObj({ ...filterObj, page: filterObj.page + 1, limit: 10 });
-        handleFiltering();
+        if (loading) return;
+        // console.log('totalList', totalList);
+        // console.log('totalCount', totalCount);
+        // if (totalList.length === totalCount) {
+        //     setHasMore(false);
+        //     return;
+        // }
+        setPage(page + 1);
+        // handleFiltering();
     };
 
-    const handleFiltering = () => {
-        const queryString = createQueryString(filterObj);
-        setUrl(`/offer?${queryString}`);
-        console.log('queryString', queryString);
-    };
+    // const handleFiltering = () => {
+    //     const queryString = createQueryString(filterObj);
+    //     setUrl(`/offer?${queryString}`);
+    //     console.log('queryString', queryString);
+    // };
 
     const getFilters = (values: any) => {
-        setTotalList([]);
-        console.log('values', values);
-        setFilterObj({ ...filterObj, ...values, page: 1, limit: 10 });
+        setFilters({ ...values, page: 1, limit: 10 });
     };
 
     return (
@@ -95,12 +96,11 @@ const Home = () => {
                 <StyledContainer>
                     <InfiniteScroll
                         initialLoad={false}
-                        pageStart={0}
                         loadMore={handleInfiniteOnLoad}
                         hasMore={!loading && hasMore}
                         useWindow={false}
                     >
-                        <JobOfferList offerList={totalList} spinnerLoading={loading} />
+                        <JobOfferList offerList={offers} spinnerLoading={loading && hasMore} />
                     </InfiniteScroll>
                 </StyledContainer>
             </Col>
