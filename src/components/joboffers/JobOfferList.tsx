@@ -1,4 +1,4 @@
-import { Space, Spin, Tag } from 'antd';
+import { Skeleton, Space, Spin, Tag } from 'antd';
 import { List } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import React from 'react';
@@ -85,11 +85,9 @@ const JobOfferList = ({ offerList, spinnerLoading }: IJobOfferListProps) => {
                 </Link>
             )}
         >
-            {spinnerLoading && (
-                <StyledSpinner>
-                    <Spin size='large' />
-                </StyledSpinner>
-            )}
+            <Skeleton loading={spinnerLoading} active>
+                <List.Item.Meta />
+            </Skeleton>
         </List>
     );
 };
