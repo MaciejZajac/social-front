@@ -40,7 +40,12 @@ const Pricing = () => {
 
     return (
         <Row style={{ margin: '40px 0' }}>
-            <Col sm={{ span: 24, offset: 0 }} md={{ span: 22, offset: 1 }} lg={{ span: 16, offset: 4 }}>
+            <Col
+                sm={{ span: 24, offset: 0 }}
+                md={{ span: 22, offset: 1 }}
+                lg={{ span: 16, offset: 4 }}
+                xl={{ span: 10, offset: 6 }}
+            >
                 <Steps current={current}>
                     {steps.map((item) => (
                         <Step key={item.title} title={item.title} />
