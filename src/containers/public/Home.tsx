@@ -90,6 +90,7 @@ const Home = () => {
                 style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 xs={{ span: 22, offset: 1 }}
                 md={{ span: 16, offset: 4 }}
+                xl={{ span: 12, offset: 6 }}
             >
                 <Typography.Title level={1}>Lista Ofert</Typography.Title>
                 <Filters filterFunc={getFilters} />

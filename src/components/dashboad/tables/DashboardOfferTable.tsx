@@ -35,22 +35,24 @@ const DashboardOfferTable = ({ offerList }: ICompanyListProps) => {
             key: '_id',
         },
         {
-            title: 'Job title',
+            title: 'Stanowisko',
             dataIndex: 'jobTitle',
             key: 'jobTitle',
         },
         {
-            title: 'Pension from',
+            title: 'Pensja',
             dataIndex: 'pensionFrom',
             key: 'pensionFrom',
+            render: (text: any, record: IDashboardOffer) => {
+                return (
+                    <>
+                        {record.pensionFrom} - {record.pensionTo} zł
+                    </>
+                );
+            },
         },
         {
-            title: 'Pension to',
-            dataIndex: 'pensionTo',
-            key: 'pensionTo',
-        },
-        {
-            title: 'Action',
+            title: 'Akcje',
             key: 'action',
             render: (text: any, record: IDashboardOffer) => {
                 return (
@@ -60,6 +62,9 @@ const DashboardOfferTable = ({ offerList }: ICompanyListProps) => {
                         </Button>
                         <Button danger onClick={() => handleDeleteOffer(record._id)} loading={deleteLoading}>
                             Delete
+                        </Button>
+                        <Button type='primary'>
+                            <Link to={`/oferta/${record._id}`}>Szczegóły</Link>
                         </Button>
                     </Space>
                 );

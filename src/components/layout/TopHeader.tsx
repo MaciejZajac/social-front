@@ -9,30 +9,33 @@ const TopHeader = () => {
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Menu mode='horizontal'>
-                <Menu.Item key='1'>
+                <Menu.Item key='oferty'>
                     <Link to='/'>Oferty pracy</Link>
                 </Menu.Item>
-                <Menu.Item key='2'>
+                <Menu.Item key='profile'>
                     <Link to='/profilefirm'>Profile pracodawców</Link>
                 </Menu.Item>
             </Menu>
 
             <Menu mode='horizontal'>
+                <Menu.Item key='cennik'>
+                    <Link to='/cennik'>Cennik</Link>
+                </Menu.Item>
                 {user?.token ? (
                     <>
-                        <Menu.Item key='3'>
+                        <Menu.Item key='dashboard'>
                             <Link to='/dashboard'>Dashboard</Link>
                         </Menu.Item>
-                        <Menu.Item key='4' onClick={() => logout()}>
+                        <Menu.Item key='wyloguj' onClick={() => logout()}>
                             Wyloguj
                         </Menu.Item>
                     </>
                 ) : (
                     <>
-                        <Menu.Item key='5'>
+                        <Menu.Item key='rejestracja'>
                             <Link to='/register'>Rejestracja</Link>
                         </Menu.Item>
-                        <Menu.Item key='6'>
+                        <Menu.Item key='login'>
                             <Link to='/login'>Zaloguj</Link>
                         </Menu.Item>
                     </>

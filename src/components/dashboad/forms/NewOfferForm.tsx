@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, message, Select } from 'antd';
+import { Form, Input, Button, message, Select, Space } from 'antd';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+
+const possibleOptions = ['JavaScript', 'React', 'Vue', 'TypeScript', 'Unit testing', 'HTML', 'CSS'];
 
 const NewOfferForm = () => {
     const history = useHistory();
@@ -35,37 +37,46 @@ const NewOfferForm = () => {
             >
                 <Input />
             </Form.Item>
-
-            <Form.Item label='Opis' name='jobDescription' rules={[{ required: true }]}>
-                <Input.TextArea />
+            <Form.Item
+                label='Opis'
+                name='jobDescription'
+                rules={[
+                    { required: true, message: 'To pole nie może być puste' },
+                    { min: 10, message: 'Opis musi mieć przynajmniej 10 znaków' },
+                    { max: 2000, message: 'Opis nie może przekraczać 2000 znaków' },
+                ]}
+            >
+                <Input.TextArea rows={10} />
             </Form.Item>
 
-            <Form.Item label='Pensja od' name='pensionFrom' rules={[{ required: true }]}>
-                <Input />
-            </Form.Item>
-
-            <Form.Item label='Pensja do' name='pensionTo' rules={[{ required: true }]}>
-                <Input />
-            </Form.Item>
+            <Space size='middle'>
+                <Form.Item
+                    label='Pensja od'
+                    name='pensionFrom'
+                    rules={[{ required: true, message: 'To pole nie może być puste' }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    label='Pensja do'
+                    name='pensionTo'
+                    rules={[{ required: true, message: 'To pole nie może być puste' }]}
+                >
+                    <Input />
+                </Form.Item>
+            </Space>
 
             <Form.Item
                 label='Narzędzia wykorzystywane na stanowisku'
                 name='requiredSkills'
-                rules={[{ required: true }]}
+                rules={[{ required: true, message: 'To pole nie może być puste' }]}
             >
                 <Select mode='tags' placeholder='React, TypeScript, Scrum...' style={{ width: '100%' }}>
-                    <Select.Option key={1} value={'JavaScript'}>
-                        {'JavaScript'}
-                    </Select.Option>
-                    <Select.Option key={2} value={'React'}>
-                        {'React'}
-                    </Select.Option>
-                    <Select.Option key={3} value={'TypeScript'}>
-                        {'TypeScript'}
-                    </Select.Option>
-                    <Select.Option key={4} value={'Node'}>
-                        {'Node'}
-                    </Select.Option>
+                    {possibleOptions.map((option) => (
+                        <Select.Option key={option} value={option}>
+                            {option}
+                        </Select.Option>
+                    ))}
                 </Select>
             </Form.Item>
 

@@ -16,7 +16,9 @@ const SingleOffer = () => {
 
     return (
         <Row style={{ marginTop: '2rem' }}>
-            <Col md={{ span: 16, offset: 4 }}>{loading ? <Spinner /> : <JobOffer offer={offer} />}</Col>
+            <Col xs={{ span: 22, offset: 1 }} md={{ span: 16, offset: 4 }} xl={{ span: 12, offset: 6 }}>
+                {loading ? <Spinner /> : <JobOffer offer={offer} />}
+            </Col>
         </Row>
     );
 };

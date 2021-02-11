@@ -15,11 +15,13 @@ import AccountActivated from './containers/auth/AccountActivated';
 import NotFoundPage from './containers/public/NotFoundPage';
 import CompleteProfile from './containers/private/CompleteProfile';
 import PublicProfile from './containers/public/companyProfiles/PublicProfile';
+import Pricing from './components/pricing/Pricing';
 
 const Router = () => {
     return (
         <Switch>
             <Route exact path='/' component={Home} />
+            <Route exact path='/cennik' component={Pricing} />
             <Route exact path='/oferta/:id' component={SingleOffer} />
             <Route exact path='/profilefirm' component={CompanyProfiles} />
             <Route exact path='/profil/:profileId' component={CompanyProfileDetails} />
