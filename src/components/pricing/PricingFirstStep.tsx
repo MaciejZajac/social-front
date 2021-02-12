@@ -1,6 +1,11 @@
 import { Button, Col, Row, Typography } from 'antd';
-import { offerEnum } from './Pricing';
 import styled from 'styled-components';
+
+export enum offerEnum {
+    test = 'TEST',
+    basic = 'PODSTAWOWY',
+    premium = 'PREMIUM',
+}
 
 const StyledContainer = styled.div`
     display: flex;

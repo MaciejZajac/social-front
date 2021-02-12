@@ -9,6 +9,7 @@ import { IDashboardOffer } from '../../types/productTypes';
 import { IUserDetails } from '../../types/userTypes';
 import useQuery from '../../hooks/useQuery';
 import { createQueryString } from '../../hooks/createQueryString';
+import CompanyProfileDetailed from '../../components/dashboad/profile/CompanyProfileDetailed';
 
 interface IData {
     offerList: IDashboardOffer[];
@@ -40,11 +41,6 @@ const Dashboard = () => {
             <Row style={{ margin: '20px 0' }}>
                 <Col sm={{ span: 24, offset: 0 }} md={{ span: 22, offset: 1 }} lg={{ span: 20, offset: 2 }}>
                     <ProfileData data={user} />
-                    {/* {!user.companyPublicProfile && (
-                        <Button type='primary'>
-                            <Link to='/dashboard/profilpubliczny'>Dodaj profil publiczny</Link>
-                        </Button>
-                    )} */}
                 </Col>
             </Row>
 
@@ -60,6 +56,30 @@ const Dashboard = () => {
                     </Col>
                 </Row>
             )} */}
+
+            <Row style={{ margin: '40px 0' }}>
+                <Col sm={{ span: 24, offset: 0 }} md={{ span: 22, offset: 1 }} lg={{ span: 20, offset: 2 }}>
+                    <Space direction='horizontal' align='baseline'>
+                        <Typography.Title level={2}>Profil publiczny</Typography.Title>
+                        {!user?.companyPublicProfile ? (
+                            <Button type='primary'>
+                                <Link to='/dashboard/profilpubliczny'>Dodaj profil publiczny</Link>
+                            </Button>
+                        ) : (
+                            <Button type='default'>
+                                <Link to={`/dashboard/profilpubliczny/${user?.companyPublicProfile}`}>
+                                    Zaktualizuj profil
+                                </Link>
+                            </Button>
+                        )}
+                    </Space>
+                    {!user?.companyPublicProfile ? (
+                        <div>brak profilu</div>
+                    ) : (
+                        <CompanyProfileDetailed profileId={user?.companyPublicProfile} />
+                    )}
+                </Col>
+            </Row>
 
             <Row style={{ margin: '40px 0' }}>
                 <Col sm={{ span: 24, offset: 0 }} md={{ span: 22, offset: 1 }} lg={{ span: 20, offset: 2 }}>

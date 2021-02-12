@@ -1,20 +1,43 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, message, Select } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Input, Button, message, Select, Spin } from 'antd';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import Spinner from '../../other/Spinner';
 
 const CompanyProfileForm = () => {
+    const { profileId }: any = useParams();
     const history = useHistory();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
+    const [initialValues, setInitialValues] = useState({});
 
-    const onFinish = async (values: any) => {
-        setLoading(true);
+    useEffect(() => {
+        if (profileId) {
+            const getFormValues = async () => {
+                setLoadingInitial(true);
+                try {
+                    const { companyProfile } = await axios.get(`/companyProfile/${profileId}`).then((res) => res.data);
+                    const { companyDescription, technologiesUsed } = companyProfile;
+                    console.log('companyDescription, technologiesUsed', companyDescription, technologiesUsed);
+                    setInitialValues({ companyDescription, technologiesUsed });
+                    setLoadingInitial(false);
+                } catch (err) {
+                    message.error('Coś się nie udało');
+                    setLoadingInitial(false);
+                }
+            };
+
+            getFormValues();
+        }
+    }, []);
+
+    const handleAddNewProfile = async (values: any) => {
         try {
-            const { companyDescription, skillsInCompany } = values;
+            const { companyDescription, technologiesUsed } = values;
             await axios
                 .post(`/companyProfile`, {
                     companyDescription,
-                    skillsInCompany,
+                    technologiesUsed,
                 })
                 .then((response) => response.data);
             setLoading(false);
@@ -26,9 +49,37 @@ const CompanyProfileForm = () => {
         }
     };
 
+    const handleUpdateNewProfile = async (values: any) => {
+        try {
+            const { companyDescription, technologiesUsed } = values;
+            await axios
+                .put(`/companyProfile/${profileId}`, {
+                    companyDescription,
+                    technologiesUsed,
+                })
+                .then((response) => response.data);
+            setLoading(false);
+            message.success('Udało się zaktualizować profil');
+            history.replace('/dashboard');
+        } catch (err) {
+            message.error('Coś się nie udało');
+            setLoading(false);
+        }
+    };
+    const onFinish = (values: any) => {
+        setLoading(true);
+        if (profileId) {
+            handleUpdateNewProfile(values);
+        } else {
+            handleAddNewProfile(values);
+        }
+    };
+
+    if (loadingInitial) return <Spinner />;
+
     return (
-        <Form name='basic' layout='vertical' onFinish={onFinish}>
-            <Form.Item label='Narzędzia wykorzystywane w firmie' name='skillsInCompany' rules={[{ required: true }]}>
+        <Form name='basic' layout='vertical' initialValues={initialValues} onFinish={onFinish}>
+            <Form.Item label='Narzędzia wykorzystywane w firmie' name='technologiesUsed' rules={[{ required: true }]}>
                 <Select mode='tags' placeholder='React, TypeScript, Scrum...' style={{ width: '100%' }}>
                     <Select.Option key={1} value={'JavaScript'}>
                         {'JavaScript'}

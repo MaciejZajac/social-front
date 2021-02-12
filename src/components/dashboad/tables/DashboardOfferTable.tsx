@@ -58,10 +58,15 @@ const DashboardOfferTable = ({ offerList }: ICompanyListProps) => {
                 return (
                     <Space size='middle'>
                         <Button type='default' loading={deleteLoading}>
-                            <Link to={`/dashboard/oferta/${record._id}`}>Update</Link>
+                            <Link to={`/dashboard/oferta/${record._id}`}>Zaktualizuj</Link>
                         </Button>
-                        <Button danger onClick={() => handleDeleteOffer(record._id)} loading={deleteLoading}>
-                            Delete
+                        <Button
+                            type='primary'
+                            danger
+                            onClick={() => handleDeleteOffer(record._id)}
+                            loading={deleteLoading}
+                        >
+                            Usuń
                         </Button>
                         <Button type='primary'>
                             <Link to={`/oferta/${record._id}`}>Szczegóły</Link>

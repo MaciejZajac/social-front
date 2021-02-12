@@ -30,7 +30,11 @@ const Router = () => {
             <Route exact path='/registerconfirm' component={RegisterConfirm} />
             <Route exact path='/activateaccount/:token' component={AccountActivated} />
             <ProtectedRoute exact path='/dashboard' component={Dashboard} />
-            <ProtectedRoute exact path='/dashboard/profilpubliczny' component={PublicProfile} />
+            <ProtectedRoute
+                exact
+                path={['/dashboard/profilpubliczny', '/dashboard/profilpubliczny/:profileId']}
+                component={PublicProfile}
+            />
             <ProtectedRoute exact path='/dashboard/dodajoferte' component={AddNewOffer} />
             <ProtectedRoute exact path='/dashboard/completeyourprofile' component={CompleteProfile} />
             <ProtectedRoute exact path='/dashboard/oferta/:id' component={OfferDetails} />
