@@ -34,7 +34,7 @@ const CompanyList = ({ companyList }: ICompanyListProps) => {
                             title={
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Space size={6} direction='horizontal'>
-                                        <Typography.Title level={2}>Netguru</Typography.Title>
+                                        <Typography.Title level={2}>{item.companyName}</Typography.Title>
                                         <div>Software house</div>
                                     </Space>
                                     <div>Warszawa</div>

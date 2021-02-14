@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.3",
-    "@testing-library/user-event": "^12.6.2",
     "antd": "^4.11.2",
     "axios": "^0.21.1",
     "js-cookie": "^2.2.1",
@@ -23,8 +20,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:start:app": "cross-env BROWSER=none react-scripts -r @cypress/instrument-cra start",
+    "cypress:start:wait": "start-server-and-test cypress:start:app http://localhost:3000",
+    "cypress:open": "npm run cypress:start:wait -- \"cypress open\"",
+    "cypress:run": "npm run cypress:start:wait -- \"cypress run\""
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +45,8 @@
     ]
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.9.2",
+    "@cypress/instrument-cra": "^1.4.0",
     "@types/js-cookie": "^2.2.6",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/react": "^17.0.0",
@@ -52,6 +54,9 @@
     "@types/react-infinite-scroller": "^1.2.1",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.7",
-    "dotenv": "^8.2.0"
+    "cross-env": "^7.0.3",
+    "cypress": "^6.4.0",
+    "dotenv": "^8.2.0",
+    "start-server-and-test": "^1.12.0"
   }
 }
